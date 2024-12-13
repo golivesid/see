@@ -8,7 +8,8 @@
 </head>
 <body>
     <div id="jwplayerDiv"></div>
-    // Disable right-click
+    <script>
+            // Disable right-click
 document.addEventListener('contextmenu', function(e) {
     e.preventDefault();
 });
@@ -44,7 +45,6 @@ setInterval(function() {
         devtoolsOpen = false;
     }
 }, 1000);
-    <script>
         // Fetch the DRM keys from the JSON file
         fetch('drmKeys.json')
             .then(response => response.json())
