@@ -9,42 +9,30 @@
 <body>
     <div id="jwplayerDiv"></div>
     <script>
-            // Disable right-click
-document.addEventListener('contextmenu', function(e) {
-    e.preventDefault();
-});
+ <!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+  </head>
+  <body>
+<script>
+      const disabledKeys = ["c", "C", "x", "J", "u", "I"]; // keys that will be disabled
 
-// Disable specific keyboard shortcuts like F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
-document.addEventListener('keydown', function(e) {
-    // F12 or Ctrl+Shift+I or Ctrl+Shift+J or Ctrl+U
-    if (e.key === 'F12' || 
-       (e.ctrlKey && e.shiftKey && (e.key === 'I'  e.key === 'J'))  
-       (e.ctrlKey && e.key === 'U')) {
-        e.preventDefault();
-    }
-});
+      const showAlert = e => {
+        e.preventDefault(); // preventing its default behaviour
+        return alert("Sorry, you can't view or copy source codes this way!");
+      }
 
-// Prevent the use of Ctrl+Shift+C (Element inspector)
-document.addEventListener('keydown', function(e) {
-    if (e.ctrlKey && e.shiftKey && e.key === 'C') {
-        e.preventDefault();
-    }
-});
+      document.addEventListener("contextmenu", e => {
+        showAlert(e); // calling showAlert() function on mouse right click
+      });
 
-
-var devtoolsOpen = false;
-
-// Detect devtools based on window size manipulation
-setInterval(function() {
-    if (window.outerWidth - window.innerWidth > 100 || window.outerHeight - window.innerHeight > 100) {
-        devtoolsOpen = true;
-        console.log("Developer Tools are open.");
-        // Optional: You can redirect or show a warning here
-        alert("Developer Tools are open. Please close them to continue.");
-    } else {
-        devtoolsOpen = false;
-    }
-}, 1000);
+      document.addEventListener("keydown", e => {
+        // calling showAlert() function, if the pressed key matched to disabled keys
+        if((e.ctrlKey && disabledKeys.includes(e.key)) || e.key === "F12") {
+          showAlert(e);
+        }
+      });
     </script>
     
     <script>
