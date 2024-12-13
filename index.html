@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JW Player with DRM</title>
+    <script src="https://content.jwplatform.com/libraries/SAHhwvZq.js"></script>
+</head>
+<body>
+    <div id="jwplayerDiv"></div>
+    // Disable right-click
+document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+});
+
+// Disable specific keyboard shortcuts like F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+document.addEventListener('keydown', function(e) {
+    // F12 or Ctrl+Shift+I or Ctrl+Shift+J or Ctrl+U
+    if (e.key === 'F12' || 
+       (e.ctrlKey && e.shiftKey && (e.key === 'I'  e.key === 'J'))  
+       (e.ctrlKey && e.key === 'U')) {
+        e.preventDefault();
+    }
+});
+
+// Prevent the use of Ctrl+Shift+C (Element inspector)
+document.addEventListener('keydown', function(e) {
+    if (e.ctrlKey && e.shiftKey && e.key === 'C') {
+        e.preventDefault();
+    }
+});
+
+
+var devtoolsOpen = false;
+
+// Detect devtools based on window size manipulation
+setInterval(function() {
+    if (window.outerWidth - window.innerWidth > 100 || window.outerHeight - window.innerHeight > 100) {
+        devtoolsOpen = true;
+        console.log("Developer Tools are open.");
+        // Optional: You can redirect or show a warning here
+        alert("Developer Tools are open. Please close them to continue.");
+    } else {
+        devtoolsOpen = false;
+    }
+}, 1000);
+    <script>
+        // Fetch the DRM keys from the JSON file
+        fetch('drmKeys.json')
+            .then(response => response.json())
+            .then(data => {
+                // Set up JW Player with the fetched keys
+                jwplayer("jwplayerDiv").setup({
+                    file: "https://ottb.live.cf.ww.aiv-cdn.net/lhr-nitro/live/clients/dash/enc/lsdasbvglv/out/v1/bb548a3626cd4708afbb94a58d71dce9/cenc.mpd",
+                    type: "dash",
+                    drm: {
+                        "clearkey": {
+                            "keyId": data.keyId,
+                            "key": data.key
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error('Error fetching DRM keys:', error));
+    </script>
+</body>
+</html>
