@@ -9,7 +9,24 @@
 <body>
     <div id="jwplayerDiv"></div>
     <script>
-            // Disable right-click
+        // Fetch the DRM keys from the JSON file
+        fetch('drmKeys.json')
+            .then(response => response.json())
+            .then(data => {
+                // Set up JW Player with the fetched keys
+                jwplayer("jwplayerDiv").setup({
+                    file: "https://ottb.live.cf.ww.aiv-cdn.net/lhr-nitro/live/clients/dash/enc/lsdasbvglv/out/v1/bb548a3626cd4708afbb94a58d71dce9/cenc.mpd",
+                    type: "dash",
+                    drm: {
+                        "clearkey": {
+                            "keyId": data.keyId,
+                            "key": data.key
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error('Error fetching DRM keys:', error));
+          // Disable right-click
 document.addEventListener('contextmenu', function(e) {
     e.preventDefault();
 });
@@ -45,30 +62,10 @@ setInterval(function() {
         devtoolsOpen = false;
     }
 }, 1000);
-        // Fetch the DRM keys from the JSON file
-        fetch('drmKeys.json')
-            .then(response => response.json())
-            .then(data => {
-                // Set up JW Player with the fetched keys
-                jwplayer("jwplayerDiv").setup({
-                    file: "https://ottb.live.cf.ww.aiv-cdn.net/lhr-nitro/live/clients/dash/enc/lsdasbvglv/out/v1/bb548a3626cd4708afbb94a58d71dce9/cenc.mpd",
-                    type: "dash",
-                    drm: {
-                        "clearkey": {
-                            "keyId": data.keyId,
-                            "key": data.key
-                        }
-                    }
-                });
-            })
-            .catch(error => console.error('Error fetching DRM keys:', error));
     </script>
-    <div id="popup">
-        <div class="popup-content">
           <h2>Support Us!</h2>
           <p>Join Our Telegram Channel @CricMantrahd.</p>
           <button class="join-btn" onclick="window.open('https://t.me/+kfJZ4exLottkOTY1', '_blank')">Join Now</button>
-          <button class="close-btn" onclick="closePopup()">Already Joined</button>
         </div>
       </div>
 </body>
