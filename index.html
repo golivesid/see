@@ -3,30 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JW Player with DRM</title>
+    <title>SEEUSPORTS</title>
     <script src="https://content.jwplatform.com/libraries/SAHhwvZq.js"></script>
 </head>
 <body>
     <div id="jwplayerDiv"></div>
     <script>
-        // Fetch the DRM keys from the JSON file
-        fetch('drmKeys.json')
-            .then(response => response.json())
-            .then(data => {
-                // Set up JW Player with the fetched keys
-                jwplayer("jwplayerDiv").setup({
-                    file: "https://ottb.live.cf.ww.aiv-cdn.net/lhr-nitro/live/clients/dash/enc/lsdasbvglv/out/v1/bb548a3626cd4708afbb94a58d71dce9/cenc.mpd",
-                    type: "dash",
-                    drm: {
-                        "clearkey": {
-                            "keyId": data.keyId,
-                            "key": data.key
-                        }
-                    }
-                });
-            })
-            .catch(error => console.error('Error fetching DRM keys:', error));
-          // Disable right-click
+            // Disable right-click
 document.addEventListener('contextmenu', function(e) {
     e.preventDefault();
 });
@@ -62,6 +45,26 @@ setInterval(function() {
         devtoolsOpen = false;
     }
 }, 1000);
+    </script>
+    
+    <script>
+        // Fetch the DRM keys from the JSON file
+        fetch('drmKeys.json')
+            .then(response => response.json())
+            .then(data => {
+                // Set up JW Player with the fetched keys
+                jwplayer("jwplayerDiv").setup({
+                    file: "https://ottb.live.cf.ww.aiv-cdn.net/lhr-nitro/live/clients/dash/enc/lsdasbvglv/out/v1/bb548a3626cd4708afbb94a58d71dce9/cenc.mpd",
+                    type: "dash",
+                    drm: {
+                        "clearkey": {
+                            "keyId": data.keyId,
+                            "key": data.key
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error('Error fetching DRM keys:', error));
     </script>
           <h2>Support Us!</h2>
           <p>Join Our Telegram Channel @CricMantrahd.</p>
